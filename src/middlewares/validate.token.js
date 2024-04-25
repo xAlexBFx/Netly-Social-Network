@@ -16,4 +16,4 @@ export const authRequired = (req, res, next) => {
         req.user = decoded_user;
         next();
     })
-}
+};
