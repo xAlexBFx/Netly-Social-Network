@@ -39,6 +39,28 @@ const UserSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
+    settings: {
+        privateAccount: {
+            type: Boolean,
+            required: true,
+            default: false
+        },
+        language: {
+            type: String,
+            required: true,
+            default: 'english'
+        },
+        restrictedMode: {
+            type: Boolean,
+            required: true,
+            default: true
+        },
+        showStatus: {
+            type: Boolean,
+            required: true,
+            default: true
+        },
+    },
 },{
     timestamps: true,
 })

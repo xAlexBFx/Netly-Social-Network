@@ -42,6 +42,7 @@ export const register = async (req, res) => {
                     'id': savedUser._id,
                     'birthDate': savedUser.birthdate,
                     'gender': savedUser.gender,
+                    'settings': savedUser.settings,
                     'nationality': savedUser.nationality,
                     'createdAt': savedUser.createdAt,
                     'updatedAt': savedUser.updatedAt
@@ -92,6 +93,7 @@ export const login = async (req, res) => {
                     'id': foundUser._id,
                     'birthDate': foundUser.birthdate,
                     'gender': foundUser.gender,
+                    'settings': foundUser.settings,
                     'nationality': foundUser.nationality,
                     'createdAt': foundUser.createdAt,
                     'updatedAt': foundUser.updatedAt
@@ -176,6 +178,7 @@ export const verifyAccessToken = async (req, res) => {
             'id': foundUser.id,
             'birthDate': foundUser.birthdate,
             'gender': foundUser.gender,
+            'settings': foundUser.settings,
             'nationality': foundUser.nationality,
             'createdAt': foundUser.createdAt,
             'updatedAt': foundUser.updatedAt
