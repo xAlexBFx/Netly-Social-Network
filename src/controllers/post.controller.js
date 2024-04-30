@@ -1,5 +1,5 @@
 import Post from '../models/Post.js';
-import Like from '../models/like.js';
+import Relationship from '../models/Relationship.js';
 
 export const getUserPosts = async(req, res) => {
     try {
@@ -121,6 +121,7 @@ export const deletePost = async(req, res) => {
                 'errorStatus': true
             });
 
+        await Relationship.deleteMany({ to: req.params.id })
         await Post.findByIdAndDelete(req.params.id)
             .then(post => {
                 if(!post) return res.status(404).json({
@@ -137,104 +138,3 @@ export const deletePost = async(req, res) => {
         });
     };
 }
-
-export const getLikes = async(req, res) => {
-    if(req.params.postId) {
-        try {
-            const foundPost = await Post.findById(req.params.postId);
-            if(!foundPost) return res.status(404).json({
-                'message': 'Post not Found!',
-                'errorStatus': true
-            });
-
-            const postLikes = await Like.find({to: req.params.postId})
-            res.json(postLikes);
-
-        } catch (err) {
-            console.log(err)
-            res.status(404).json({
-                'message': 'Internal Server Error',
-                'errorStatus': true
-            });
-        };
-    } else {
-        res.status(400).json({
-            'message': 'There are missing values!',
-            'errorStatus': true
-        });
-    }
-};
-
-export const addLike = async(req, res) => {
-    if(req.params.postId) {
-        try {
-            const foundPost = await Post.findById(req.params.postId);
-            if(!foundPost) return res.status(404).json({
-                'message': 'Post not Found!',
-                'errorStatus': true
-            });
-
-            const newLike = new Like({
-                from: req.user.id,
-                type: 'Post',
-                to: req.params.postId
-            });
-
-            const savedLike = await newLike.save();
-            if(!savedLike) return res.status(404).json({
-                'message': 'Internal Server Error',
-                'errorStatus': true
-            });
-            res.json(savedLike);
-        } catch (err) {
-            console.log(err)
-            res.status(404).json({
-                'message': 'Internal Server Error',
-                'errorStatus': true
-            });
-        };
-    } else {
-        res.status(400).json({
-            'message': 'There are missing values!',
-            'errorStatus': true
-        });
-    }
-};
-
-export const deleteLike = async(req, res) => {
-    if(req.params.likeId) {
-        try {
-            const foundLike = await Like.findById(req.params.likeId);
-            if(!foundLike) return res.status(404).json({
-                'message': 'Like not Found!',
-                'errorStatus': true
-            });
-
-            if(req.user.id !== foundLike.from.toString()) return res.status(401).json({
-                'message': 'Not Authorized!!!',
-                'errorStatus': true
-            });
-
-            await Like.findByIdAndDelete(req.params.likeId)
-                .then(like => {
-                        if(!like) return res.status(404).json({
-                            'message': 'Error deleting like!',
-                            'errorStatus': true
-                        });
-                        res.status(201).json();
-                    });
-
-        } catch (err) {
-            console.log(err)
-            res.status(404).json({
-                'message': 'Internal Server Error',
-                'errorStatus': true
-            });
-        };
-    } else {
-        res.status(400).json({
-            'message': 'There are missing values!',
-            'errorStatus': true
-        });
-    }
-};

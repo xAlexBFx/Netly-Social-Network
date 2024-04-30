@@ -1,4 +1,7 @@
 import User from '../models/User.js';
+import Post from '../models/Post.js';
+import Comment from '../models/Comment.js';
+import Relationship from '../models/Relationship.js';
 import bcrypt from 'bcryptjs';
 import { createAccessToken } from '../libs/jwt.js';
 import jwt from 'jsonwebtoken';
@@ -138,13 +141,18 @@ export const deleteAuth = async (req, res) => {
         res.cookie('accessToken', '',{
             expires: new Date(0)
         });
-        User.findByIdAndDelete(req.user.id)
-            .then(user => {
-                if(!user) return res.status(404).json({
-                    message: 'Internal server error',
-                    errorStatus : true
-                })
-            })
+        
+            await Relationship.deleteMany({fromUser: req.user.id})
+            await Relationship.deleteMany({to: req.user.id})
+            await Comment.deleteMany({user: req.user.id})
+            await Post.deleteMany({user: req.user.id})
+            await User.findByIdAndDelete(req.user.id)
+                .then(user => {
+                    if(!user) return res.status(404).json({
+                        message: 'Internal server error',
+                        errorStatus : true
+                    })
+                });
         res.status(202).json();
     } catch (err) {
         console.log(err);

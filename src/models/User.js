@@ -24,6 +24,21 @@ const UserSchema = new mongoose.Schema({
         trim: true,
         unique: true
     },
+    posts: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    followers: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    following: {
+        type: Number,
+        required: true,
+        default: 0
+    },
     birthdate: {
         type: Date,
         required: true,

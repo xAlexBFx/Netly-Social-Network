@@ -9,7 +9,7 @@ export const authRequired = (req, res, next) => {
     });
 
     jwt.verify(accessToken, Config.secretWebToken, (err, decoded_user) => {
-        if(err) res.status(403).json({
+        if(err) return res.status(403).json({
             'message': 'Invalid access token!',
             'errorStatus' : true
         });
