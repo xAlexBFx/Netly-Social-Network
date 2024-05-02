@@ -1,20 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StatusBar } from 'react-native';
+
+// import RegisterScreen from './screens/RegisterScreen.js';
+import LoginScreen from './screens/LoginScreen.js';
+// import ProfileScreen from './screens/ProfileScreen.js';
+
+import Logo from './assets/adaptive-icon.png';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  <NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen 
+        name='Login' 
+        component={ LoginScreen } 
+        options={{
+          headerLeft: () => <Image source={Logo} style={{
+            width: 75,
+            height: 75,
+          }} />,
+          title: 'Netly'
+        }}/>
+    </Stack.Navigator>
+    <StatusBar />
+  </NavigationContainer>
+)
+};
