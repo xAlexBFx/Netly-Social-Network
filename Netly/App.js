@@ -1,32 +1,36 @@
-import { Image } from 'react-native';
+import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StatusBar } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { AuthContext } from './context/authContext.js';
 
-// import RegisterScreen from './screens/RegisterScreen.js';
 import LoginScreen from './screens/LoginScreen.js';
-// import ProfileScreen from './screens/ProfileScreen.js';
+import ProfileScreen from './screens/ProfileScreen.js';
 
-import Logo from './assets/adaptive-icon.png';
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
-const Stack = createNativeStackNavigator();
-
-export default function App() {
-  return (
-  <NavigationContainer>
+const AuthStack = () =>(
     <Stack.Navigator>
-      <Stack.Screen 
-        name='Login' 
-        component={ LoginScreen } 
-        options={{
-          headerLeft: () => <Image source={Logo} style={{
-            width: 75,
-            height: 75,
-          }} />,
-          title: 'Netly'
-        }}/>
+      <Stack.Screen name="Login" component={LoginScreen} />
     </Stack.Navigator>
-    <StatusBar />
-  </NavigationContainer>
-)
+);
+
+
+const App  = () => {
+  const { isLoggedIn } = useContext(AuthContext);
+
+  return (
+    <NavigationContainer>
+      {isLoggedIn ? (
+        <Tab.Navigator>
+          <Tab.Screen name="Profile" component={ProfileScreen} />
+        </Tab.Navigator>
+      ) : (
+        <AuthStack />
+      )}
+    </NavigationContainer>
+  );
 };
+
+export default App ;
