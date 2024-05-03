@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View, Image, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-
 import Logo from '../assets/adaptive-icon.png';
 
 const LoginScreen = () => {
