@@ -1,5 +1,5 @@
 import { useState, createContext, useContext } from 'react';
-// import { registerRequest, loginRequest } from '../api/auth.js';
+import { loginRequest } from '../api/auth.js';
 
 export const AuthContext = createContext();
 
@@ -14,7 +14,7 @@ export const useAuth = () => {
 export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    // const [isLoading, setIsLoading] = useState(true);
+    const [errors, setErrors] = useState([]);
 
     // const signup = async (user) => {
     //     try {
@@ -36,16 +36,22 @@ export const AuthProvider = ({children}) => {
     //     }
     //     },[errors]);
 
-    // const signin = async (user) => {
-    //     try {
-    //         const res = await loginRequest(user);
-    //         setUser(res.data);
-    //         setIsAuthenticated(true);
-    //     } catch (err){
-    //         if(Array.isArray(err.response.data.messages)) return setErrors(err.response.data.messages);
-    //         setErrors([err.response.data.message]);
-    //     }
-    // }
+    const signIn = async (user) => {
+        try {
+            const res = await loginRequest(
+                {
+                    "toFindUserData" : "alexdev@gmail.com",
+                    "password" : "123456"
+                });
+            console.log(res.data)
+            // setUser(res.data);
+            // setIsAuthenticated(true);
+        } catch (err){
+            console.log(err)
+            // if(Array.isArray(err.response.data.messages)) return setErrors(err.response.data.messages);
+            // setErrors([err.response.data.message]);
+        }
+    }
 
     // const logout = () => {
     //     Cookies.remove('token')
@@ -90,6 +96,8 @@ export const AuthProvider = ({children}) => {
         <AuthContext.Provider value={{
             user,
             isAuthenticated,
+            signIn,
+            errors
         }}
         >
             {children}

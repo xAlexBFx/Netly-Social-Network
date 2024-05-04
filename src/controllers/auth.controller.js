@@ -12,13 +12,13 @@ export const register = async (req, res) => {
         const { username, password, email, birthDate, description, nationality, gender } = req.body;
         try {
             const foundUserByEmail = await User.findOne({email});
-            if(foundUserByEmail) return res.status(400).json({
+            if(foundUserByEmail) return res.status(401).json({
                 'message': ['This email is already in use!'],
                 'errorStatus': true
             });
 
             const foundUserByUsername = await User.findOne({username});
-            if(foundUserByUsername) return res.status(400).json({
+            if(foundUserByUsername) return res.status(401).json({
                 'message': 'This username is already in use!',
                 'errorStatus': true
             });
@@ -73,14 +73,14 @@ export const login = async (req, res) => {
         try {
             const foundUserByEmail = await User.findOne({ email: toFindUserData });
             const foundUserByUsername = await User.findOne({ username: toFindUserData });
-            if(!foundUserByEmail && !foundUserByUsername) return res.status(400).json({
+            if(!foundUserByEmail && !foundUserByUsername) return res.status(401).json({
                 'message' : 'User not found!',
                 'errorStatus' : true
             });
 
             const foundUser = foundUserByEmail ? foundUserByEmail: foundUserByUsername;
             const isMatch = await bcrypt.compare(password, foundUser.password);
-            if(!isMatch) return res.status(400).json({
+            if(!isMatch) return res.status(401).json({
                 'message' : 'Incorrect Password!',
                 'errorStatus' : true
             });

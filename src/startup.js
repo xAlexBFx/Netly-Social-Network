@@ -4,6 +4,7 @@ import Config from './config.js';
 connectDB();
 
 const serverPort = Config.appConfig.port;
+const serverIP = Config.appConfig.ip;
 
-app.listen(serverPort)
-console.log(`>>> API on port ${serverPort}`);
+app.listen(serverPort, serverIP)
+console.log(`>>> API on ${serverIP} port ${serverPort}`);

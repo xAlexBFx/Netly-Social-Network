@@ -129,7 +129,7 @@ export const addLikeToComment = async(req, res) => {
             });
         };
     } else {
-        res.status(400).json({
+        res.status(401).json({
             'message': 'There are missing values!',
             'errorStatus': true
         });
@@ -155,7 +155,7 @@ export const getLikesFromComment = async(req, res) => {
             });
         };
     } else {
-        res.status(400).json({
+        res.status(401).json({
             'message': 'There are missing values!',
             'errorStatus': true
         });
@@ -193,7 +193,7 @@ export const deleteLikeFromComment = async(req, res) => {
             });
         };
     } else {
-        res.status(400).json({
+        res.status(401).json({
             'message': 'There are missing values!',
             'errorStatus': true
         });
@@ -219,7 +219,7 @@ export const getLikesFromPost = async(req, res) => {
             });
         };
     } else {
-        res.status(400).json({
+        res.status(401).json({
             'message': 'There are missing values!',
             'errorStatus': true
         });
@@ -262,7 +262,7 @@ export const addLikeToPost = async(req, res) => {
             });
         };
     } else {
-        res.status(400).json({
+        res.status(401).json({
             'message': 'There are missing values!',
             'errorStatus': true
         });
@@ -299,7 +299,7 @@ export const deleteLikeFromPost = async(req, res) => {
             });
         };
     } else {
-        res.status(400).json({
+        res.status(401).json({
             'message': 'There are missing values!',
             'errorStatus': true
         });

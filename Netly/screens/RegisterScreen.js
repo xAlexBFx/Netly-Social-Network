@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, Image, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
+// import { Picker } from '@react-native-picker/picker';
 
 import Logo from '../assets/adaptive-icon.png';
 

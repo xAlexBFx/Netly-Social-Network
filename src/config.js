@@ -4,7 +4,8 @@ configDotenv();
 const Config = {
     appConfig: {
         port: process.env.SERVER_PORT,
-        host: process.env.SERVER_HOST
+        host: process.env.SERVER_HOST,
+        ip: process.env.SERVER_IP
     },
     dbConfig: {
         port: process.env.DB_PORT,

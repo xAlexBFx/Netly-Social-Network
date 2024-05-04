@@ -1,5 +1,6 @@
 import Comment from '../models/Comment.js';
 import Relationship from '../models/Relationship.js';
+
 export const getCommentsFromPost = async(req, res) => {
     if(req.params.postId) {
         try {
@@ -13,7 +14,7 @@ export const getCommentsFromPost = async(req, res) => {
             });
         };
     } else {
-        res.status(400).json({
+        res.status(401).json({
             'message': 'There are missing values!',
             'errorStatus': true
         });
@@ -50,7 +51,7 @@ export const addComment = async(req, res) => {
             });
         };
     } else {
-        res.status(400).json({
+        res.status(401).json({
             'message': 'There are missing values!',
             'errorStatus': true
         });
@@ -88,7 +89,7 @@ export const deleteComment = async(req, res) => {
             });
         };
     } else {
-        res.status(400).json({
+        res.status(401).json({
             'message': 'There are missing values!',
             'errorStatus': true
         });

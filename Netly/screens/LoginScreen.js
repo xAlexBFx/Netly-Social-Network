@@ -1,19 +1,63 @@
 import React from 'react';
 import { Text, View, Image, TextInput, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Formik } from 'formik';
+import { useAuth } from '../context/authContext.js';
 
 import Logo from '../assets/adaptive-icon.png';
 
 const LoginScreen = () => {
     const navigation = useNavigation();
+    const { signIn } = useAuth();
+
+    const onSubmit = data => signIn(data);
+
     return (
         <View style={ formStyles.container }>
             <Image source={Logo} style={ formStyles.logo } />
-            <TextInput style = { formStyles.input } placeholderTextColor='white' placeholder='Email or Username' />
-            <TextInput style = { formStyles.input } placeholderTextColor='white' placeholder='Password' />
-            <TouchableOpacity style={ formStyles.button } ><Text style ={{ fontWeight: '500', fontSize: 16, color: 'white' }} >Login</Text></TouchableOpacity>
-            <TouchableOpacity><Text style={ {fontSize: 16, fontWeight: 600, color: 'white', marginTop: 15} } >Forgot Password?</Text></TouchableOpacity>
-            <TouchableOpacity style={formStyles.createButton} ><Text style ={{ fontWeight: '500', fontSize: 16, color: 'white' }} >Create Account</Text></TouchableOpacity>
+            <Formik 
+                initialValues={{ toFindUserData: '', password: '' }}
+                onSubmit={onSubmit}>
+                {({ handleChange, handleBlur, handleSubmit, values }) => (
+                    <View>
+                        <TextInput 
+                            style ={ formStyles.input }
+                            placeholderTextColor='white'
+                            placeholder='Email or Username'
+                            onChangeText={handleChange('toFindUserData')}
+                            onBlur={handleBlur('toFindUserData')}
+                            value={values.toFindUserData}
+                        />
+                        <TextInput 
+                            style ={ formStyles.input }
+                            placeholderTextColor='white'
+                            placeholder='Password'
+                            onChangeText={handleChange('password')}
+                            onBlur={handleBlur('password')}
+                            value={values.password}
+                        />
+                        <TouchableOpacity
+                                style={ formStyles.button }
+                                onPress={handleSubmit}>
+                                <Text
+                                    style ={{ fontWeight: '500', fontSize: 16, color: 'white' }}>
+                                    Login
+                                </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Text
+                                style={ {fontSize: 16, fontWeight: 600, color: 'white', marginTop: 15} }
+                                >Forgot Password?
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={formStyles.createButton}
+                            onPress={()=> navigation.navigate('Register')}>
+                                <Text style ={{ fontWeight: '500', fontSize: 16, color: 'white' }} >Create Account</Text>
+                        </TouchableOpacity>
+                        </View>
+                    )}
+            </Formik>
         </View>
     )
 };
