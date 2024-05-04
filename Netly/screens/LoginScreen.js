@@ -1,14 +1,19 @@
 import React from 'react';
-import { Text, View, Image, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, Image, TextInput, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 import Logo from '../assets/adaptive-icon.png';
 
 const LoginScreen = () => {
+    const navigation = useNavigation();
     return (
         <View style={ formStyles.container }>
             <Image source={Logo} style={ formStyles.logo } />
-            <TextInput style = { formStyles.input } placeholder='Email or Username' />
-            <TextInput style = { formStyles.input } placeholder='Password' />
-            <TouchableOpacity style={ formStyles.button } ><Text style ={{ fontWeight: '500', fontSize: 15, }} >Login</Text></TouchableOpacity>
+            <TextInput style = { formStyles.input } placeholderTextColor='white' placeholder='Email or Username' />
+            <TextInput style = { formStyles.input } placeholderTextColor='white' placeholder='Password' />
+            <TouchableOpacity style={ formStyles.button } ><Text style ={{ fontWeight: '500', fontSize: 16, color: 'white' }} >Login</Text></TouchableOpacity>
+            <TouchableOpacity><Text style={ {fontSize: 16, fontWeight: 600, color: 'white', marginTop: 15} } >Forgot Password?</Text></TouchableOpacity>
+            <TouchableOpacity style={formStyles.createButton} ><Text style ={{ fontWeight: '500', fontSize: 16, color: 'white' }} >Create Account</Text></TouchableOpacity>
         </View>
     )
 };
@@ -30,32 +35,41 @@ const formStyles = StyleSheet.create({
         marginBottom: 50,
         marginTop: 50,
         resizeMode: 'cover',
-        
     },
     input: {
-        color: 'white',
-        fontSize: 12,
-        width: '70%',
+        fontSize: 16,
+        width: '90%',
         height: '20',
         padding: "3%",
-        backgroundColor: 'rgb(20, 153, 133)',
+        borderWidth: 1,
+        borderColor:'rgb(20, 153, 133)', 
+        backgroundColor:'rgba(20, 153, 133, 0.1)', 
         margin: 15,
-        borderRadius: 10,
+        borderRadius: 8,
         fontWeight: '500',
+        color: 'white'
     },
     button: {
-        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: 'white',
-        fontWeight: '800',
-        fontSize: 12,
-        width: '70%',
+        width: '90%',
         height: 'auto',
         padding: "3%",
         backgroundColor: 'rgb(20, 153, 133)',
         margin: 15,
-        borderRadius: 10,
+        borderRadius: 8,
+    },
+    createButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '70%',
+        height: 'auto',
+        padding: "3%",
+        borderWidth: 1,
+        borderColor:'rgb(20, 153, 133)', 
+        backgroundColor:'rgba(20, 153, 133, 0.1)', 
+        marginTop: 120,
+        borderRadius: 8,
     },
 });
 

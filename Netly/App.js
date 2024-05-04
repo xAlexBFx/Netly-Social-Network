@@ -1,21 +1,47 @@
-import 'react-native-gesture-handler';
-import React from 'react';
+import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import { AuthProvider } from './context/authContext.js';
+import { PaperProvider } from 'react-native-paper';
+import { StatusBar } from 'react-native';
 
-import LoginScreen from './screens/LoginScreen.js';
-// import ProfileScreen from './screens/ProfileScreen.js';
+import AppTheme from './AppTheme.js'
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen.js'
+import ProfileScreen from './screens/ProfileScreen.js'
 
+const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const App  = () => {
+export default function App() {
+  const isSignIn = false;
   return (
-    <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Login" component={LoginScreen} />
-        </Stack.Navigator>
-    </NavigationContainer>
+    <PaperProvider theme={AppTheme}>
+      <AuthProvider>
+        <StatusBar barStyle= 'light-content' backgroundColor='rgb(36, 40, 27)'/>
+        <NavigationContainer>
+          {
+            isSignIn ? 
+            (
+              <Tab.Navigator initialRouteName='Profile' >
+                <Tab.Screen name='Profile' component={ProfileScreen}/>
+              </Tab.Navigator>
+            ) : 
+            (
+              <Stack.Navigator initialRouteName='Login' screenOptions = {{
+                headerShown: false,
+                gestureEnabled: false,
+                gestureDirection: 'horizontal',
+                ...TransitionPresets.SlideFromRightIOS,
+              }}>
+                <Stack.Screen name='Login' component={LoginScreen}/>
+                <Stack.Screen name='Register' component={RegisterScreen}/>
+            </Stack.Navigator>
+            )
+          }
+        </NavigationContainer>
+      </AuthProvider>
+    </PaperProvider>
   );
-};
-
-export default App;
+}
