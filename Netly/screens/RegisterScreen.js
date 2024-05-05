@@ -8,30 +8,54 @@ import Logo from '../assets/adaptive-icon.png';
 
 const LoginScreen = () => {
     const navigation = useNavigation();
-    const { signIn, errors, setErrors } = useAuth();
-
+    const { signup, error, setError } = useAuth();
     const onSubmit = data => {
-        if(!data.toFindUserData) return setErrors(['Email or Username Required'])
-        if(!data.password) return setErrors(['Password Required'])
-        signIn(data);
+        if(!data.username) return setError(['Username Required'])
+        if(!data.email) return setError(['Email Required'])
+        if(!data.password) return setError(['Password Required'])
+        if(!data.confirmPassword) return setError(['Confirm Password Required'])
+        if(data.password !== data.confirmPassword) return setError(['Two different passwords typed!'])
+        data.nationality = 'United States'
+        data.gender = 'masculine'
+
+        const birthDate = '2007-09-07'
+        const date = new Date(birthDate);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        data.birthDate = `${year}-${month}-${day}`;
+        signup(data);
     }
 
     useEffect(()=> {
-        if(errors.length > 0) Alert.alert(errors[0],'', [
+        if(error[0]) Alert.alert(error[0],'', [
             {
-                text: 'OK'
+                text: 'OK', onPress: ()=>{}
             }
             ]);;
-    }, [errors])
+    }, [error])
 
     return (
         <View style={ formStyles.container }>
             <Image source={Logo} style={ formStyles.logo } />
             <Formik  
-                initialValues={{ toFindUserData: '', password: '' }}
+                initialValues={{ username: '', password: '', email: '', confirmPassword: '' }}
                 onSubmit={onSubmit}>
                 {({ handleChange, handleBlur, handleSubmit, values }) => (
-                    <View style = { formStyles.container}>
+                    <View style = { formStyles.formContainer}>
+                        <TextInput 
+                            contextMenuHidden = {true}
+                            inputMode='text'
+                            textAlign='left'
+                            autoComplete='username'
+                            keyboardType='default'
+                            style ={ formStyles.input }
+                            placeholderTextColor='rgb(149, 228, 196)'
+                            placeholder= 'Username'
+                            onChangeText={handleChange('username')}
+                            onBlur={handleBlur('username')}
+                            value={values.username}
+                        />
                         <TextInput 
                             contextMenuHidden = {true}
                             inputMode='email'
@@ -40,10 +64,10 @@ const LoginScreen = () => {
                             keyboardType='email-address'
                             style ={ formStyles.input }
                             placeholderTextColor='rgb(149, 228, 196)'
-                            placeholder='Email or Username'
-                            onChangeText={handleChange('toFindUserData')}
-                            onBlur={handleBlur('toFindUserData')}
-                            value={values.toFindUserData}
+                            placeholder= 'Email'
+                            onChangeText={handleChange('email')}
+                            onBlur={handleBlur('email')}
+                            value={values.email}
                         />
                         <TextInput 
                             textAlign='left'
@@ -56,28 +80,33 @@ const LoginScreen = () => {
                             onBlur={handleBlur('password')}
                             value={values.password}
                         />
+                        <TextInput 
+                            textAlign='left'
+                            secureTextEntry= {true}
+                            style ={ formStyles.input }
+                            keyboardType='default'
+                            placeholderTextColor='rgb(149, 228, 196)'
+                            placeholder='Confirm Password'
+                            onChangeText={handleChange('confirmPassword')}
+                            onBlur={handleBlur('confirmPassword')}
+                            value={values.confirmPassword}
+                        />
                         <TouchableOpacity
                                 style={ formStyles.button }
                                 onPress={handleSubmit}>
                                 <Text
                                     style ={{ fontWeight: '500', fontSize: 16, color: 'rgb(149, 228, 196)', borderColor : 'rgb(149, 228, 196)' }}>
-                                    Login
+                                    Create Account
                                 </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Text
-                                style={ {fontSize: 16, fontWeight: 600, color: 'rgb(149, 228, 196)', marginTop: 15} }
-                                >Forgot Password?
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={formStyles.createButton}
-                            onPress={()=> navigation.navigate('Login')}>
-                                <Text style ={{ fontWeight: '500', fontSize: 16, color: 'rgb(149, 228, 196)' }} >Create Account</Text>
                         </TouchableOpacity>
                         </View>
                     )}
             </Formik>
+            <TouchableOpacity
+                style={formStyles.createButton}
+                onPress={()=> navigation.navigate('Login')}>
+                    <Text style ={{ fontWeight: '500', fontSize: 16, color: 'rgb(149, 228, 196)' }} >Login</Text>
+            </TouchableOpacity>
         </View>
     )
 };
@@ -89,14 +118,23 @@ const formStyles = StyleSheet.create({
             alignSelf: 'center',
             width: '100%',
             height: '100%',
-            padding: '5%',
+            paddingHorizontal: '5%',
             backgroundColor: 'rgb(36, 40, 27)'
+        },
+    formContainer : {
+            alignItems: 'center',
+            flexDirection: 'column',
+            alignSelf: 'center',
+            width: '100%',
+            height: 'auto',
+            paddingHorizontal: '5%',
+            backgroundColor: 'transparent'
         },
     logo: {
         width: 200,
         height: 200,
         alignSelf: 'center',
-        marginTop: 10,
+        marginTop: 8,
         resizeMode: 'cover',
     },
     input: {

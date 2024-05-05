@@ -8,18 +8,18 @@ import jwt from 'jsonwebtoken';
 import Config from '../config.js';
 
 export const register = async (req, res) => {
-    if(req.body.username && req.body.password && req.body.email, req.body.nationality && req.body.gender) {
+    if(req.body.username && req.body.password && req.body.email, req.body.nationality && req.body.gender && req.body.birthDate) {
         const { username, password, email, birthDate, description, nationality, gender } = req.body;
         try {
-            const foundUserByEmail = await User.findOne({email});
-            if(foundUserByEmail) return res.status(401).json({
-                'message': ['This email is already in use!'],
-                'errorStatus': true
-            });
-
             const foundUserByUsername = await User.findOne({username});
             if(foundUserByUsername) return res.status(401).json({
                 'message': 'This username is already in use!',
+                'errorStatus': true
+            });
+
+            const foundUserByEmail = await User.findOne({email});
+            if(foundUserByEmail) return res.status(401).json({
+                'message': 'This email is already in use!',
                 'errorStatus': true
             });
 

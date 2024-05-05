@@ -8,21 +8,21 @@ import Logo from '../assets/adaptive-icon.png';
 
 const LoginScreen = () => {
     const navigation = useNavigation();
-    const { signIn, errors, setErrors } = useAuth();
+    const { signIn, error, setError } = useAuth();
 
     const onSubmit = async data => {
-        if(!data.toFindUserData) return setErrors(['Email or Username Required'])
-        if(!data.password) return setErrors(['Password Required'])
+        if(!data.toFindUserData) return setError(['Email or Username Required'])
+        if(!data.password) return setError(['Password Required'])
         await signIn(data)
     }
 
     useEffect(()=> {
-        if(errors.length > 0) Alert.alert(errors[0],'', [
+        if(error[0]) Alert.alert(error[0],'', [
             {
                 text: 'OK'
             }
             ]);;
-    }, [errors])
+    }, [error])
 
     return (
         <View style={ formStyles.container }>
@@ -31,7 +31,7 @@ const LoginScreen = () => {
                 initialValues={{ toFindUserData: '', password: '' }}
                 onSubmit={onSubmit}>
                 {({ handleChange, handleBlur, handleSubmit, values }) => (
-                    <View style = { formStyles.container}>
+                    <View style = { formStyles.formContainer}>
                         <TextInput 
                             contextMenuHidden = {true}
                             inputMode='email'
@@ -64,20 +64,20 @@ const LoginScreen = () => {
                                     Login
                                 </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Text
-                                style={ {fontSize: 16, fontWeight: 600, color: 'rgb(149, 228, 196)', marginTop: 15} }
-                                >Forgot Password?
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={formStyles.createButton}
-                            onPress={()=> navigation.navigate('Register')}>
-                                <Text style ={{ fontWeight: '500', fontSize: 16, color: 'rgb(149, 228, 196)' }} >Create Account</Text>
-                        </TouchableOpacity>
+
                         </View>
                     )}
             </Formik>
+            <TouchableOpacity>
+                <Text
+                    style={ {fontSize: 16, fontWeight: 600, color: 'rgb(149, 228, 196)', marginTop: 15} }>Forgot Password?
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={formStyles.createButton}
+                onPress={()=> navigation.navigate('Register')}>
+                    <Text style ={{ fontWeight: '500', fontSize: 16, color: 'rgb(149, 228, 196)' }} >Create Account</Text>
+            </TouchableOpacity>
         </View>
     )
 };
@@ -91,6 +91,15 @@ const formStyles = StyleSheet.create({
             height: '100%',
             padding: '5%',
             backgroundColor: 'rgb(36, 40, 27)'
+        },
+    formContainer : {
+            alignItems: 'center',
+            flexDirection: 'column',
+            alignSelf: 'center',
+            width: '100%',
+            height: 'auto',
+            padding: '5%',
+            backgroundColor: 'transparent'
         },
     logo: {
         width: 200,

@@ -25,12 +25,12 @@ export const registerSchema = z.object({
     nationality: z.string({
         required_error: 'Nationality is required'
     }),
-    birthDate: z.date({
-        // required_error: 'Birth date is required',
+    birthDate: z.string().date({
+        required_error: 'Birth date is required',
         invalid_type_error: 'Invalid birth date'
     }).max(new Date(), {
-        message: 'You were already born!'
-    }).optional()
+        message: 'You are too young'
+    })
 });
 
 export const loginSchema = z.object({

@@ -25,31 +25,33 @@ export const getUserData = async () => {
 export const AuthProvider = ({children, checkAuthentication}) => {
     const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [errors, setErrors] = useState([]);
+    const [error, setError] = useState([]);
     // const [isLoading, setIsLoading] = useState(false);
 
     const signup = async (user) => {
         try {
+            delete user.confirmPassword;
+            console.log(user)
             const res = await registerRequest(user);
-            const savedSuccessfully = await AsyncStorage.setItem('userData', JSON.stringify(res.data.user));
-            if(!savedSuccessfully) throw new Error('Error saving user data');
+            await AsyncStorage.setItem('userData', JSON.stringify(res.data.user));
             setUser(res.data.user);
             setIsAuthenticated(true);
-            checkAuthentication(true)
+            checkAuthentication(true);
         }catch (err) {
-            if(Array.isArray(err.response.data.messages)) return setErrors(err.response.data.messages);
-            setErrors([err.response.data.message]);
+            console.log(err.response.data.messages)
+            if(Array.isArray(err.response.data.messages)) return setError([err.response.data.messages[0]]);
+            setError([err.response.data.message]);
         }
     }
 
     useEffect(() => {
-        if(errors.length > 0) {
+        if(error[0]) {
             const timer = setTimeout(() => {
-                setErrors([])
-            },5000)
+                setError([])
+            },500)
             return () => clearTimeout(timer)
         }
-        },[errors]);
+        },[error]);
 
     const signIn = async (user) => {
         try {
@@ -57,11 +59,11 @@ export const AuthProvider = ({children, checkAuthentication}) => {
             await AsyncStorage.setItem('userData', JSON.stringify(res.data.user));
             setUser(res.data.user);
             setIsAuthenticated(true);
-            checkAuthentication(true)
+            checkAuthentication(true);
         } catch (err){
-            if(!err.response) return setErrors(err);
-            if(Array.isArray(err.response.data.messages)) return setErrors(err.response.data.messages);
-            setErrors([err.response.data.message]);
+            if(!err.response) return setError(err);
+            if(Array.isArray(err.response.data.messages)) return setError(err.response.data.messages[0]);
+            setError([err.response.data.message]);
         }
     }
 
@@ -108,8 +110,8 @@ export const AuthProvider = ({children, checkAuthentication}) => {
             signup,
             signIn,
             logout,
-            errors,
-            setErrors,
+            error,
+            setError,
         }}
         >
             {children}
