@@ -1,5 +1,5 @@
-import React from 'react';
-import { Text, View, Image, TextInput, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import React, { useEffect } from 'react';
+import { Text, View, Image, TextInput, StyleSheet, TouchableOpacity, Button, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import { useAuth } from '../context/authContext.js';
@@ -8,29 +8,49 @@ import Logo from '../assets/adaptive-icon.png';
 
 const LoginScreen = () => {
     const navigation = useNavigation();
-    const { signIn } = useAuth();
+    const { signIn, errors, setErrors } = useAuth();
 
-    const onSubmit = data => signIn(data);
+    const onSubmit = async data => {
+        if(!data.toFindUserData) return setErrors(['Email or Username Required'])
+        if(!data.password) return setErrors(['Password Required'])
+        await signIn(data)
+    }
+
+    useEffect(()=> {
+        if(errors.length > 0) Alert.alert(errors[0],'', [
+            {
+                text: 'OK'
+            }
+            ]);;
+    }, [errors])
 
     return (
         <View style={ formStyles.container }>
             <Image source={Logo} style={ formStyles.logo } />
-            <Formik 
+            <Formik  
                 initialValues={{ toFindUserData: '', password: '' }}
                 onSubmit={onSubmit}>
                 {({ handleChange, handleBlur, handleSubmit, values }) => (
-                    <View>
+                    <View style = { formStyles.container}>
                         <TextInput 
+                            contextMenuHidden = {true}
+                            inputMode='email'
+                            textAlign='left'
+                            autoComplete='email'
+                            keyboardType='email-address'
                             style ={ formStyles.input }
-                            placeholderTextColor='white'
+                            placeholderTextColor='rgb(149, 228, 196)'
                             placeholder='Email or Username'
                             onChangeText={handleChange('toFindUserData')}
                             onBlur={handleBlur('toFindUserData')}
                             value={values.toFindUserData}
                         />
                         <TextInput 
+                            textAlign='left'
+                            secureTextEntry= {true}
                             style ={ formStyles.input }
-                            placeholderTextColor='white'
+                            keyboardType='default'
+                            placeholderTextColor='rgb(149, 228, 196)'
                             placeholder='Password'
                             onChangeText={handleChange('password')}
                             onBlur={handleBlur('password')}
@@ -40,20 +60,20 @@ const LoginScreen = () => {
                                 style={ formStyles.button }
                                 onPress={handleSubmit}>
                                 <Text
-                                    style ={{ fontWeight: '500', fontSize: 16, color: 'white' }}>
+                                    style ={{ fontWeight: '500', fontSize: 16, color: 'rgb(149, 228, 196)', borderColor : 'rgb(149, 228, 196)' }}>
                                     Login
                                 </Text>
                         </TouchableOpacity>
                         <TouchableOpacity>
                             <Text
-                                style={ {fontSize: 16, fontWeight: 600, color: 'white', marginTop: 15} }
+                                style={ {fontSize: 16, fontWeight: 600, color: 'rgb(149, 228, 196)', marginTop: 15} }
                                 >Forgot Password?
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={formStyles.createButton}
                             onPress={()=> navigation.navigate('Register')}>
-                                <Text style ={{ fontWeight: '500', fontSize: 16, color: 'white' }} >Create Account</Text>
+                                <Text style ={{ fontWeight: '500', fontSize: 16, color: 'rgb(149, 228, 196)' }} >Create Account</Text>
                         </TouchableOpacity>
                         </View>
                     )}
@@ -76,8 +96,7 @@ const formStyles = StyleSheet.create({
         width: 200,
         height: 200,
         alignSelf: 'center',
-        marginBottom: 50,
-        marginTop: 50,
+        marginTop: 10,
         resizeMode: 'cover',
     },
     input: {
@@ -86,12 +105,12 @@ const formStyles = StyleSheet.create({
         height: '20',
         padding: "3%",
         borderWidth: 1,
-        borderColor:'rgb(20, 153, 133)', 
-        backgroundColor:'rgba(20, 153, 133, 0.1)', 
+        borderColor:'rgb(149, 228, 196)', 
+        backgroundColor:'rgba(44, 73, 48, 0.2)', 
         margin: 15,
         borderRadius: 8,
         fontWeight: '500',
-        color: 'white'
+        color: 'rgb(149, 228, 196)'
     },
     button: {
         alignItems: 'center',
@@ -99,8 +118,10 @@ const formStyles = StyleSheet.create({
         width: '90%',
         height: 'auto',
         padding: "3%",
-        backgroundColor: 'rgb(20, 153, 133)',
-        margin: 15,
+        backgroundColor: 'rgb(44, 73, 48)',
+        borderColor: 'rgb(149, 228, 196)',
+        borderWidth: 1,
+        margin: 20,
         borderRadius: 8,
     },
     createButton: {
@@ -110,7 +131,7 @@ const formStyles = StyleSheet.create({
         height: 'auto',
         padding: "3%",
         borderWidth: 1,
-        borderColor:'rgb(20, 153, 133)', 
+        borderColor:'rgb(149, 228, 196)', 
         backgroundColor:'rgba(20, 153, 133, 0.1)', 
         marginTop: 120,
         borderRadius: 8,
