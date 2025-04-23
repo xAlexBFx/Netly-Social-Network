@@ -7,4 +7,4 @@ const serverPort = Config.appConfig.port;
 const serverIP = Config.appConfig.ip;
 
 app.listen(serverPort, serverIP)
-console.log(`>>> API on ${serverIP} port ${serverPort}`);
+    console.log(`>>> API at http://${serverIP}:${serverPort}`);

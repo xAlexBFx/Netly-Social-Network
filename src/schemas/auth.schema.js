@@ -11,6 +11,11 @@ export const registerSchema = z.object({
     }).email({
         message: 'Invalid email'
     }),
+    phoneNumber: z.string({
+        invalid_type_error: 'Invalid phone number'
+    }).regex(/^\d{1,3}-\d{3}-\d{3}-\d{4}$/, {
+        message: 'Your phone number must see like this "+xxx-xxx-xxx-xxx"'
+    }).optional(),
     password: z.string({
         required_error: 'Password is required',
         invalid_type_error: 'Invalid password'
@@ -25,9 +30,9 @@ export const registerSchema = z.object({
     nationality: z.string({
         required_error: 'Nationality is required'
     }),
-    birthDate: z.string().date({
-        required_error: 'Birth date is required',
-        invalid_type_error: 'Invalid birth date'
+    birthday: z.string().date({
+        required_error: 'Birthday is required',
+        invalid_type_error: 'Invalid Birthday'
     }).max(new Date(), {
         message: 'You are too young'
     })
@@ -35,15 +40,17 @@ export const registerSchema = z.object({
 
 export const loginSchema = z.object({
     toFindUserData: z.string({
-        required_error: 'Email or username is required',
+        required_error: 'Email, username or phone number is required',
     }).or(z.string().email({
         message: 'Invalid email'
+    })).or(z.string().regex(/^\d{1,3}-\d{3}-\d{3}-\d{4}$/, {
+        message: 'Your phone number must see like this "+xxx-xxx-xxx-xxx"'
     })),
     password: z.string({
         required_error: 'Password is required',
         invalid_type_error: 'Invalid password'
     })
     .min(6, {
-        message: 'The password must be at least 6 characters'
+        message: 'Your password must have 6 characters'
     })
 });

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="55d7fa89-784f-4a9c-b6ee-d93bc47c3fe1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Netly/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/Netly/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Netly/AppTheme.js" beforeDir="false" afterPath="$PROJECT_DIR$/Netly/AppTheme.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Netly/api/axios.js" beforeDir="false" afterPath="$PROJECT_DIR$/Netly/api/axios.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Netly/context/authContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/Netly/context/authContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Netly/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Netly/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Netly/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Netly/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Netly/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/Netly/screens/LoginScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Netly/screens/ProfileScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/Netly/screens/ProfileScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Netly/screens/RegisterScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/Netly/screens/RegisterScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/auth.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/auth.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schemas/auth.schema.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/schemas/auth.schema.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/startup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/startup.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2j6eLqB7l4wAgYoRjGcCJvF1JLN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "main"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="55d7fa89-784f-4a9c-b6ee-d93bc47c3fe1" name="Changes" comment="" />
+      <created>1720711901185</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1720711901185</updated>
+    </task>
+    <servers />
+  </component>
+</project>

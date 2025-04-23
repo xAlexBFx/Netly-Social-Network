@@ -8,8 +8,8 @@ import jwt from 'jsonwebtoken';
 import Config from '../config.js';
 
 export const register = async (req, res) => {
-    if(req.body.username && req.body.password && req.body.email, req.body.nationality && req.body.gender && req.body.birthDate) {
-        const { username, password, email, birthDate, description, nationality, gender } = req.body;
+    if(req.body.username && req.body.password && req.body.email, req.body.nationality && req.body.gender && req.body.birthday) {
+        const { username, password, email, birthday, description, nationality, gender } = req.body;
         try {
             const foundUserByUsername = await User.findOne({username});
             if(foundUserByUsername) return res.status(401).json({
@@ -29,7 +29,7 @@ export const register = async (req, res) => {
                 password: passwordHash,
                 email,
                 description,
-                birthdate: birthDate,
+                birthday,
                 nationality,
                 gender
             });
@@ -43,7 +43,8 @@ export const register = async (req, res) => {
                     'email': savedUser.email,
                     'description': savedUser.description,
                     'id': savedUser._id,
-                    'birthDate': savedUser.birthdate,
+                    'phoneNumber': savedUser.phoneNumber,
+                    'birthday': savedUser.birthday,
                     'gender': savedUser.gender,
                     'settings': savedUser.settings,
                     'nationality': savedUser.nationality,
@@ -73,12 +74,13 @@ export const login = async (req, res) => {
         try {
             const foundUserByEmail = await User.findOne({ email: toFindUserData });
             const foundUserByUsername = await User.findOne({ username: toFindUserData });
+            // const foundUserByPhoneNumber = await User.findOne({ phoneNumber: toFindUserData });
             if(!foundUserByEmail && !foundUserByUsername) return res.status(401).json({
                 'message' : 'User not found!',
                 'errorStatus' : true
             });
 
-            const foundUser = foundUserByEmail ? foundUserByEmail: foundUserByUsername;
+            const foundUser = foundUserByEmail? foundUserByEmail : foundUserByUsername;
             const isMatch = await bcrypt.compare(password, foundUser.password);
             if(!isMatch) return res.status(401).json({
                 'message' : 'Incorrect Password!',
@@ -94,7 +96,7 @@ export const login = async (req, res) => {
                     'email': foundUser.email,
                     'description': foundUser.description,
                     'id': foundUser._id,
-                    'birthDate': foundUser.birthdate,
+                    'birthday': foundUser.birthday,
                     'gender': foundUser.gender,
                     'settings': foundUser.settings,
                     'nationality': foundUser.nationality,
@@ -184,7 +186,7 @@ export const verifyAccessToken = async (req, res) => {
             'email': foundUser.email,
             'description': foundUser.description,
             'id': foundUser.id,
-            'birthDate': foundUser.birthdate,
+            'birthday': foundUser.birthday,
             'gender': foundUser.gender,
             'settings': foundUser.settings,
             'nationality': foundUser.nationality,

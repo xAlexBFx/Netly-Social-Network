@@ -1,1 +1,7 @@
 node_modules
+openssl-3.0.14
+server.cert
+server.csr
+server.key
+package-lock.json
+Netly/node_modules
